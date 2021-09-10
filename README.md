@@ -10,3 +10,5 @@
 * Java
 * Spring MVC
 * TODO: FINISH THIS LIST
+
+### Lessons Learned
