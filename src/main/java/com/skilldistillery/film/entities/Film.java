@@ -2,54 +2,25 @@ package com.skilldistillery.film.entities;
 
 import java.util.Objects;
 
-
+// moved some things around like the field to the top and both constructors next to each other just to match with states. 8:29am hst.
 public class Film {
+	private int id;
+	private String title;
+	private String description;
+	private int releaseYear;
+	private int languageId;
+	private int rentalDuration;
+	private double rentalRate;
+	private int length;
+	private double replacementCost;
+	private String rating;
+	private String specialFeatures;
+	
+	
+	
 		public Film() {
 			super();
 		}
-		@Override
-		public String toString() {
-			StringBuilder builder = new StringBuilder();
-			builder.append("ID: ");
-			builder.append(id);
-			builder.append("\nTitle: ");
-			builder.append(title);
-			builder.append("\nSynopsis: ");
-			builder.append(description);
-			builder.append("\nRelase Year: ");
-			builder.append(releaseYear);
-//			builder.append("\nLanguage Id: ");
-//			builder.append(languageId);
-//			builder.append("\nRental Duration: ");
-//			builder.append(rentalDuration);
-//			builder.append("\n Rental Rate: ");
-//			builder.append(rentalRate);
-			builder.append("\nLength: ");
-			builder.append(length);
-//			builder.append("\nReplacement Cost: ");
-//			builder.append(replacementCost);
-			builder.append("\nRating: ");
-			builder.append(rating);
-//			builder.append("\nSpecial Features: ");
-//			builder.append(specialFeatures);
-
-			builder.append(".");
-			return builder.toString();
-		}
-		private int id;
-		private String title;
-		private String description;
-		private int releaseYear;
-		private int languageId;
-		private int rentalDuration;
-		private double rentalRate;
-		private int length;
-		private double replacementCost;
-		private String rating;
-		private String specialFeatures;
-
-		
-		
 		public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
 				double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
 			super();
@@ -64,7 +35,36 @@ public class Film {
 			this.replacementCost = replacementCost;
 			this.rating = rating;
 			this.specialFeatures = specialFeatures;
-
+			
+		}
+		
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("ID: ");
+			builder.append(id);
+			builder.append("\nTitle: ");
+			builder.append(title);
+			builder.append("\nSynopsis: ");
+			builder.append(description);
+			builder.append("\nRelase Year: ");
+			builder.append(releaseYear);
+			builder.append("\nLanguage Id: ");
+			builder.append(languageId);
+			builder.append("\nRental Duration: ");
+			builder.append(rentalDuration);
+			builder.append("\n Rental Rate: ");
+			builder.append(rentalRate);
+			builder.append("\nLength: ");
+			builder.append(length);
+			builder.append("\nReplacement Cost: ");
+			builder.append(replacementCost);
+			builder.append("\nRating: ");
+			builder.append(rating);
+			builder.append("\nSpecial Features: ");
+			builder.append(specialFeatures);
+			builder.append(".");
+			return builder.toString();
 		}
 		@Override
 		public int hashCode() {

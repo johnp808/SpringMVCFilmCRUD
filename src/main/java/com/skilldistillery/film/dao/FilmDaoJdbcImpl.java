@@ -9,10 +9,13 @@ import java.sql.Statement;
 
 import com.skilldistillery.film.entities.Film;
 
-public class FilmDaoJdbcImpl implements FilmDAO {
-	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
+public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time for no errors. 8:29 am hst.
+	private static final String URL = "jdbc:mysql://localhost:3306/historydb?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
 	private String user = "student";
 	private String pass = "student";
+	
+	private final String fullDataQuery = "SELECT * FROM Film "; // not sure if FROM Film_id or Film location is correct, 
+	//															   but its in the states impl so i added it here and tweaked it. 8:29am hst
 
 	public FilmDaoJdbcImpl() {
 		try {
