@@ -9,8 +9,8 @@
 <title>MVC Film Site</title>
 </head>
 <body>
-
 <h1>MVC Film Site</h1>
+<a href="getfilmid.html">Get Film By Id</a><br/>
 
 
 
