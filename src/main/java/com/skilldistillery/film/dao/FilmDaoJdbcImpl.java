@@ -124,7 +124,7 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 
 			int updateCount = pst.executeUpdate();
 			if (updateCount == 1) {
-				System.out.println("You successfully deleted " + updateCount + " record.");
+				System.out.println("Film record deleted.");
 			}
 			conn.commit();
 			pst.close();
