@@ -4,7 +4,7 @@ import com.skilldistillery.film.entities.Film;
 
 public interface FilmDAO {
 
-	Film findById(int filmId);
+	public Film findById(int filmId);
 	
 	
 }
