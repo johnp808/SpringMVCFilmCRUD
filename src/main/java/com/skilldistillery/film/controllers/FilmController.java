@@ -13,7 +13,11 @@ import com.skilldistillery.film.entities.Film;
 public class FilmController {
 
 	@Autowired
-	private FilmDAO filmDao;
+	private FilmDAO filmDAO;
+	
+	public void setFilmDAO(FilmDAO filmDAO) {
+		this.filmDAO = filmDAO;
+	}
 	
 	  //       finish result.jsp, then controller findFIlmById route. 
 	
@@ -25,7 +29,7 @@ public class FilmController {
 	@RequestMapping(path="GetFilmId.do", params="id", method=RequestMethod.GET)
 	public ModelAndView getFilmId(int id) {
 		ModelAndView mv = new ModelAndView();
-		Film f = filmDao.findById(id);
+		Film f = filmDAO.findById(id);
 		mv.addObject("film id", f);
 		mv.setViewName("WEB-INF/result.jsp");
 		return mv;

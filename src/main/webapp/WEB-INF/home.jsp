@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>MVC Film Site</h1>
-<a href="getfilmid.html">Get Film By Id</a><br/>
+<a href="GetFilmId.html">Get Film By Id</a><br/>
 
 
 
