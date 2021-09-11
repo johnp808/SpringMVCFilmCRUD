@@ -13,9 +13,9 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 	private static final String URL = "jdbc:mysql://localhost:3306/historydb?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
 	private String user = "student";
 	private String pass = "student";
-	
-	private final String fullDataQuery = "SELECT * FROM Film "; // not sure if FROM Film_id or Film location is correct, 
-	//															   but its in the states impl so i added it here and tweaked it. 8:29am hst
+
+	private final String fullDataQuery = "SELECT * FROM Film "; // not sure if FROM Film_id or Film location is correct,
+	// but its in the states impl so i added it here and tweaked it. 8:29am hst
 
 	public FilmDaoJdbcImpl() {
 		try {
@@ -26,46 +26,45 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public Film findById(int filmId) {
-			// TODO use JDBC code to retrieve film, create Film object
-			Film film = null;
+		// TODO use JDBC code to retrieve film, create Film object
+		Film film = null;
 
-			try {
-				Connection conn = DriverManager.getConnection(URL, user, pass);
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
 
-				String sql = "SELECT film.id, film.title, film.description, film.release_year,"
-						+ " film.language_id, film.rental_duration, film.rental_rate, film.length,"
-						+ " film.replacement_cost, film.rating, film.special_features, language.name"
-						+ " FROM film JOIN language ON language.id = film.language_id WHERE film.id = ?";
+			String sql = fullDataQuery + " WHERE film.id = ?";
 
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, filmId);
-				ResultSet filmResult = stmt.executeQuery();
-				if (filmResult.next()) {
-					film = new Film();
-					film.setId(filmResult.getInt("id"));
-					film.setTitle(filmResult.getString("title"));
-					film.setDescription(filmResult.getString("description"));
-					film.setReleaseYear(filmResult.getInt("release_year"));
-					film.setLanguageId(filmResult.getInt("language_id"));
-					film.setRentalDuration(filmResult.getInt("rental_duration"));
-					film.setRentalRate(filmResult.getDouble("rental_rate"));
-					film.setLength(filmResult.getInt("length"));
-					film.setReplacementCost(filmResult.getDouble("replacement_cost"));
-					film.setRating(filmResult.getString("rating"));
-					film.setSpecialFeatures(filmResult.getString("special_features"));
-				}
-				filmResult.close();
-				stmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				System.err.println("Database error:");
-				System.err.println("Id not found.");
-				System.err.println(e);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet filmResult = stmt.executeQuery();
+			if (filmResult.next()) {
+				film = new Film();
+				film.setId(filmResult.getInt("id"));
+				film.setTitle(filmResult.getString("title"));
+				film.setDescription(filmResult.getString("description"));
+				film.setReleaseYear(filmResult.getInt("release_year"));
+				film.setLanguageId(filmResult.getInt("language_id"));
+				film.setRentalDuration(filmResult.getInt("rental_duration"));
+				film.setRentalRate(filmResult.getDouble("rental_rate"));
+				film.setLength(filmResult.getInt("length"));
+				film.setReplacementCost(filmResult.getDouble("replacement_cost"));
+				film.setRating(filmResult.getString("rating"));
+				film.setSpecialFeatures(filmResult.getString("special_features"));
 			}
-			return film;
+			filmResult.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println("Database error:");
+			System.err.println("Id not found.");
+			System.err.println(e);
 		}
+		return film;
+	}
+
 	@Override
 	public Film createFilm(Film film) {
 		Film newFilm = null;
@@ -114,7 +113,7 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 		return newFilm;
 
 	}
-		
+
 	@Override
 	public boolean deleteFilm(Film film) {
 		Connection conn = null;

@@ -12,10 +12,13 @@ public class FilmController {
 	@Autowired
 	private FilmDAO filmDao;
 	
-	
+	  //       finish result.jsp, then controller findFIlmById route. 
 	
 	@RequestMapping(path= {"/", "home.do"} )
 	public String home() {
 		return "WEB-INF/home.jsp";
 	}
+	
+	@RequestMapping(path="GetFilmId.do", params="id", method=RequestMethod.GET)
+	public ModelAndView getFilmId
 }
