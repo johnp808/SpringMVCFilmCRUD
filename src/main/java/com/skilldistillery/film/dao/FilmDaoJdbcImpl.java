@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.skilldistillery.film.entities.Film;
 
@@ -62,4 +63,88 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 			}
 			return film;
 		}
+	@Override
+	public Film createFilm(Film film) {
+		Film newFilm = null;
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "insert into film(title, description, release_year, language_id, rental_duration, length, replacement_cost, rating, special_features) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			conn.setAutoCommit(false);
+			PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pst.setString(1, newFilm.getTitle());
+			pst.setString(2, newFilm.getDescription());
+			pst.setInt(3, newFilm.getReleaseYear());
+			pst.setInt(4, newFilm.getLanguageId());
+			pst.setInt(5, newFilm.getRentalDuration());
+			pst.setInt(6, newFilm.getLength());
+			pst.setDouble(7, newFilm.getReplacementCost());
+			pst.setString(8, newFilm.getRating());
+			pst.setString(9, newFilm.getSpecialFeatures());
+
+			int updateCount = pst.executeUpdate();
+			if (updateCount == 1) {
+				ResultSet keys = pst.getGeneratedKeys();
+				if (keys.next()) {
+					int newFilmId = keys.getInt(1);
+					newFilm.setId(newFilmId);
+				}
+				keys.close();
+			}
+			conn.commit();
+			pst.close();
+			conn.close();
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+				}
+			}
+			throw new RuntimeException("Error inserting film " + film.getTitle());
+
+		}
+
+		return newFilm;
+
+	}
+		
+	@Override
+	public boolean deleteFilm(Film film) {
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "delete from film where id = ?";
+			conn.setAutoCommit(false);
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setInt(1, film.getId());
+
+			int updateCount = pst.executeUpdate();
+			if (updateCount == 1) {
+				System.out.println("You successfully deleted " + updateCount + " record.");
+			}
+			conn.commit();
+			pst.close();
+			conn.close();
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+
+				}
+
+			}
+			throw new RuntimeException("Error inserting film " + film.getTitle());
+		}
+
+		return true;
+
+	}
 }
