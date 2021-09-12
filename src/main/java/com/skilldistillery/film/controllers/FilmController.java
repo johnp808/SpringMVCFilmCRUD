@@ -26,7 +26,7 @@ public class FilmController {
 	
 	@RequestMapping(path ="GetFilmId.do", method =RequestMethod.POST)
 	public ModelAndView GetFilmId(int filmId) {
-		Film film = filmDAO.findById(filmId);
+		Film film = filmDAO.findFilmById(filmId);
 		ModelAndView mv = new ModelAndView();
 		if (film != null) {
 			mv.addObject(film);

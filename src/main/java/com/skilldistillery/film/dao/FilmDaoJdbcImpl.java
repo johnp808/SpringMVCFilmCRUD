@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
@@ -135,15 +137,50 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 
 	}
 
-<<<<<<< HEAD
-//	@Override
-//	public Film deleteFilm(Film film) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public List<Film> findFilmByKeyword(String keyword) {
+		List<Film> filmList = new ArrayList<Film>();
+		String searchPhrase = keyword;
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
 
-=======
->>>>>>> 00a729707b18ba75e6f094131a134f212a989750
+			String sql = "SELECT film.id, film.title, film.description, film.release_year,"
+					+ " film.language_id, film.rental_duration, film.rental_rate, film.length,"
+					+ " film.replacement_cost, film.rating, film.special_features, language.name "
+					+ " FROM film JOIN language ON language.id = film.language_id"
+					+ " WHERE film.title LIKE ? OR film.description LIKE ?;";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%" + searchPhrase + "%");
+			stmt.setString(2, "%" + searchPhrase + "%");
+			ResultSet filmResult = stmt.executeQuery();
+
+			while (filmResult.next()) {
+				Film film = new Film();
+				film.setId(filmResult.getInt("id"));
+				film.setTitle(filmResult.getString("title"));
+				film.setDescription(filmResult.getString("description"));
+				film.setReleaseYear(filmResult.getInt("release_year"));
+				film.setLanguageId(filmResult.getInt("language_id"));
+				film.setRentalDuration(filmResult.getInt("rental_duration"));
+				film.setRentalRate(filmResult.getDouble("rental_rate"));
+				film.setLength(filmResult.getInt("length"));
+				film.setReplacementCost(filmResult.getDouble("replacement_cost"));
+				film.setRating(filmResult.getString("rating"));
+				film.setSpecialFeatures(filmResult.getString("special_features"));
+				filmList.add(film);
+			}
+			filmResult.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println("Database error:");
+			System.err.println(e);
+		}
+		return filmList;
+
+	}
+
 	@Override
 	public Film updateFilm(Film ogFilm, Film film) {
 		// TODO Auto-generated method stub
