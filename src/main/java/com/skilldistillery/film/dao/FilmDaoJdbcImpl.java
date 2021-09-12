@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time for no errors. 8:29 am hst.
@@ -26,38 +27,25 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 	}
 
 	@Override
-	public Film findById(int filmId) {
+	public Film findFilmById(int filmId) {
 		Film film = null;
-		String sql =  "SELECT id, title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features FROM Film WHERE id = ?";
+		String sql = "SELECT id, title, description, release_year, language_id, rental_duration, rental_rate, "
+				+ "length, replacement_cost, rating, special_features FROM film WHERE id = ?";
 
-		try {
-			Connection conn = DriverManager.getConnection(URL, user, pass);
-
-
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, filmId);
-			ResultSet filmResult = stmt.executeQuery();
-			if (filmResult.next()) {
-				film = new Film();
-				film.setId(filmResult.getInt("id"));
-				film.setTitle(filmResult.getString("title"));
-				film.setDescription(filmResult.getString("description"));
-				film.setReleaseYear(filmResult.getInt("release_year"));
-				film.setLanguageId(filmResult.getInt("language_id"));
-				film.setRentalDuration(filmResult.getInt("rental_duration"));
-				film.setRentalRate(filmResult.getDouble("rental_rate"));
-				film.setLength(filmResult.getInt("length"));
-				film.setReplacementCost(filmResult.getDouble("replacement_cost"));
-				film.setRating(filmResult.getString("rating"));
-				film.setSpecialFeatures(filmResult.getString("special_features"));
+		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+				PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setInt(1, filmId);
+			try (ResultSet rs = ps.executeQuery();) {
+				if (rs.next()) {
+					film = new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getInt("release_year"), rs.getInt("language_id"),
+							rs.getInt("rental_duration"), rs.getDouble("rental_rate"), rs.getInt("length"), rs.getDouble("replacement_cost"), rs.getString("rating"),
+							rs.getString("special_features"));
+				}
+			} catch (SQLException e) {
+				System.err.println("Database error: " + e);
 			}
-			filmResult.close();
-			stmt.close();
-			conn.close();
 		} catch (SQLException e) {
-			System.err.println("Database error:");
-			System.err.println("Id not found.");
-			System.err.println(e);
+			System.err.println("Database Error: " + e);
 		}
 		return film;
 	}
@@ -145,5 +133,17 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 
 		return true;
 
+	}
+
+	@Override
+	public Film updateFilm(Film ogFilm, Film film) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Actor addActor(Actor actor) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
