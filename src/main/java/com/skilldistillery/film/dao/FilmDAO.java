@@ -8,7 +8,7 @@ public interface FilmDAO {
 
 	Film createFilm(Film film);
 
-	public boolean deleteFilm(Film film);
+	Film deleteFilm(Film film);
 
 	Film updateFilm(Film film);
 	
