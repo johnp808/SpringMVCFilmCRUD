@@ -155,5 +155,11 @@ public class Film {
 		public void setSpecialFeatures(String specialFeatures) {
 			this.specialFeatures = specialFeatures;
 		}
+		public List<Actor> getActors() {
+			return actors;
+		}
+		public void setActors(List<Actor> actors) {
+			this.actors = actors;
+		}
 		
 	}
