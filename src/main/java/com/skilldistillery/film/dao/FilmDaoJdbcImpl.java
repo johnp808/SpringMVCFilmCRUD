@@ -14,8 +14,6 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 	private String user = "student";
 	private String pass = "student";
 
-	private final String fullDataQuery = "SELECT * FROM Film "; // not sure if FROM Film_id or Film location is correct,
-	// but its in the states impl so i added it here and tweaked it. 8:29am hst
 
 	public FilmDaoJdbcImpl() {
 		try {
@@ -29,13 +27,12 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 
 	@Override
 	public Film findById(int filmId) {
-		// TODO use JDBC code to retrieve film, create Film object
 		Film film = null;
+		String sql =  "SELECT id, title, description, release_year, language_id, rental_duration, rental_rate, length, replacement_cost, rating, special_features FROM Film WHERE id = ?";
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pass);
 
-			String sql = fullDataQuery + " WHERE film.id = ?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);

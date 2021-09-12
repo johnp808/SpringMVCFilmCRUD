@@ -1,5 +1,6 @@
 package com.skilldistillery.film.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 // moved some things around like the field to the top and both constructors next to each other just to match with states. 8:29am hst.
@@ -15,6 +16,7 @@ public class Film {
 	private double replacementCost;
 	private String rating;
 	private String specialFeatures;
+	private List<Actor> actors;
 	
 	
 	

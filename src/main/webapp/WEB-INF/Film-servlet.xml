@@ -15,10 +15,10 @@
 <bean id="id" class="com.skilldistillery.film.dao.FilmDaoJdbcImpl">
 </bean>
 
-<!-- <bean id="viewResolver"
+<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
-	</bean> -->
+	</bean>
 
 </beans>

@@ -11,28 +11,23 @@ import com.skilldistillery.film.entities.Film;
 
 @Controller
 public class FilmController {
-
 	@Autowired
 	private FilmDAO filmDAO;
-	
-	public void setFilmDAO(FilmDAO filmDAO) {
-		this.filmDAO = filmDAO;
-	}
 	
 	  //       finish result.jsp, then controller findFIlmById route. 
 	
 	@RequestMapping(path= {"/", "home.do"} )
 	public String home() {
-		return "WEB-INF/home.jsp";
+		return "home";
 	}
 	
-	@RequestMapping(path="GetFilmId.do", params="id", method=RequestMethod.GET)
-	public ModelAndView getFilmId(int id) {
+	@RequestMapping(path="GetFilmId.do", method=RequestMethod.GET)
+	public ModelAndView FindById(int filmId) {
+		Film film = filmDAO.findById(filmId);
 		ModelAndView mv = new ModelAndView();
-		Film f = filmDAO.findById(id);
-		mv.addObject("film id", f);
-		mv.setViewName("WEB-INF/result.jsp");
+		if(film != null)
+		mv.addObject(film);
+		mv.setViewName("result");
 		return mv;
-		
 	}
 }
