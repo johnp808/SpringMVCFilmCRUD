@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time for no errors. 8:29 am hst.
@@ -145,5 +146,23 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 
 		return true;
 
+	}
+
+//	@Override
+//	public Film deleteFilm(Film film) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
+	@Override
+	public Film updateFilm(Film ogFilm, Film film) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Actor addActor(Actor actor) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
