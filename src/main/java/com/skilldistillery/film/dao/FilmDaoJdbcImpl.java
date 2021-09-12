@@ -57,8 +57,7 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 			conn.setAutoCommit(false); // Start transaction
 			String sql = "INSERT INTO film (title, description, release_year,"
 					+ " language_id, rental_duration, rental_rate, length,"
-					+ " replacement_cost, rating, special_features)"
-					+ " VALUES(?,?,?,?,?,?,?,?,?,?)";
+					+ " replacement_cost, rating, special_features)" + " VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			System.out.println(film.getReplacementCost());
@@ -103,37 +102,38 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 	}
 
 	@Override
-	public Film deleteFilm(Film film) {		Film filmToDelete = film;
-	String sql = "DELETE FROM film WHERE id = ?";
-	Connection conn = null;
-	try {
-		conn = DriverManager.getConnection(URL, user, pass);
-		conn.setAutoCommit(false);
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, film.getId());
-		int uc = stmt.executeUpdate();
-		System.out.println(uc + " film records deleted");
-		conn.commit();
-	} catch (SQLException e) {
-		System.err.println("Error during delete");
-		e.printStackTrace();
-		if (conn != null) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				System.err.println("Error rolling back.");
-				e1.printStackTrace();
+	public Film deleteFilm(Film film) {
+		Film filmToDelete = film;
+		String sql = "DELETE FROM film WHERE id = ?";
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, film.getId());
+			int uc = stmt.executeUpdate();
+			System.out.println(uc + " film records deleted");
+			conn.commit();
+		} catch (SQLException e) {
+			System.err.println("Error during delete");
+			e.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					System.err.println("Error rolling back.");
+					e1.printStackTrace();
+				}
 			}
+			return null;
 		}
-		return null;
+		return filmToDelete;
 	}
-	return filmToDelete;
-}
 
 	@Override
 	public Film updateFilm(Film film) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }
