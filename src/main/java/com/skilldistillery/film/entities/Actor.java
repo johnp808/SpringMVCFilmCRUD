@@ -3,28 +3,24 @@ package com.skilldistillery.film.entities;
 import java.util.Objects;
 
 public class Actor {
+
 	private int id;
 	private String firstName;
 	private String lastName;
 
 	public Actor() {
-	}
-
-	
-	
-	public Actor(String firstName, String lastName) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
 	}
-
-
 
 	public Actor(int id, String firstName, String lastName) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
+	}
+
+	public String displayName() {
+		return firstName + " " + lastName;
 	}
 
 	public int getId() {
@@ -52,12 +48,6 @@ public class Actor {
 	}
 
 	@Override
-	public String toString() {
-//	return "Actor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
-		return "Actor Id: \n" + id + "\n\nFull Name: \n" + firstName + " " + lastName + "\n\n";
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(firstName, id, lastName);
 	}
@@ -74,4 +64,16 @@ public class Actor {
 		return Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Actor [id=");
+		builder.append(id);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append("]");
+		return builder.toString();
+	}
 }

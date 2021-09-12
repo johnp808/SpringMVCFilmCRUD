@@ -5,41 +5,38 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import com.skilldistillery.film.entities.Actor;
+
 import com.skilldistillery.film.entities.Film;
 
-public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time for no errors. 8:29 am hst.
-	private static final String URL = "jdbc:mysql://localhost:3306/historydb?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
-	private String user = "student";
-	private String pass = "student";
+public class FilmDaoJdbcImpl implements FilmDAO {
+	String url = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
+	String user = "student";
+	String pword = "student";
 
-
-	public FilmDaoJdbcImpl() {
+	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			System.err.println("Error loading database driver:");
-			System.err.println(e);
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public Film findFilmById(int filmId) {
+	public Film findById(int filmId) {
 		Film film = null;
 		String sql = "SELECT id, title, description, release_year, language_id, rental_duration, rental_rate, "
-				+ "length, replacement_cost, rating, special_features FROM film WHERE id = ?";
+				+ "length, replacement_cost, rating, special_features FROM film where id = ?";
 
-		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+		try (Connection conn = DriverManager.getConnection(url, user, pword);
 				PreparedStatement ps = conn.prepareStatement(sql);) {
 			ps.setInt(1, filmId);
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
-					film = new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getInt("release_year"), rs.getInt("language_id"),
-							rs.getInt("rental_duration"), rs.getDouble("rental_rate"), rs.getInt("length"), rs.getDouble("replacement_cost"), rs.getString("rating"),
-							rs.getString("special_features"));
+					film = new Film(rs.getInt("id"), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),
+							rs.getInt(6), rs.getDouble(7), rs.getInt(8), rs.getDouble(9), rs.getString(10),
+							rs.getString(11));
 				}
 			} catch (SQLException e) {
 				System.err.println("Database error: " + e);
@@ -52,107 +49,20 @@ public class FilmDaoJdbcImpl implements FilmDAO {// changed url to mountain time
 
 	@Override
 	public Film createFilm(Film film) {
-		Film newFilm = null;
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-			String sql = "insert into film(title, description, release_year, language_id, rental_duration, length, replacement_cost, rating, special_features) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			conn.setAutoCommit(false);
-			PreparedStatement pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pst.setString(1, newFilm.getTitle());
-			pst.setString(2, newFilm.getDescription());
-			pst.setInt(3, newFilm.getReleaseYear());
-			pst.setInt(4, newFilm.getLanguageId());
-			pst.setInt(5, newFilm.getRentalDuration());
-			pst.setInt(6, newFilm.getLength());
-			pst.setDouble(7, newFilm.getReplacementCost());
-			pst.setString(8, newFilm.getRating());
-			pst.setString(9, newFilm.getSpecialFeatures());
-
-			int updateCount = pst.executeUpdate();
-			if (updateCount == 1) {
-				ResultSet keys = pst.getGeneratedKeys();
-				if (keys.next()) {
-					int newFilmId = keys.getInt(1);
-					newFilm.setId(newFilmId);
-				}
-				keys.close();
-			}
-			conn.commit();
-			pst.close();
-			conn.close();
-
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			if (conn != null) {
-				try {
-					conn.rollback();
-				} catch (SQLException sqle2) {
-					System.err.println("Error trying to rollback");
-				}
-			}
-			throw new RuntimeException("Error inserting film " + film.getTitle());
-
-		}
-
-		return newFilm;
-
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public boolean deleteFilm(Film film) {
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-			String sql = "delete from film where id = ?";
-			conn.setAutoCommit(false);
-			PreparedStatement pst = conn.prepareStatement(sql);
-			pst.setInt(1, film.getId());
-
-			int updateCount = pst.executeUpdate();
-			if (updateCount == 1) {
-				System.out.println("Film record deleted.");
-			}
-			conn.commit();
-			pst.close();
-			conn.close();
-
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			if (conn != null) {
-				try {
-					conn.rollback();
-				} catch (SQLException sqle2) {
-					System.err.println("Error trying to rollback");
-
-				}
-
-			}
-			throw new RuntimeException("Error inserting film " + film.getTitle());
-		}
-
-		return true;
-
-	}
-
-<<<<<<< HEAD
-//	@Override
-//	public Film deleteFilm(Film film) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
-=======
->>>>>>> 00a729707b18ba75e6f094131a134f212a989750
-	@Override
-	public Film updateFilm(Film ogFilm, Film film) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-	public Actor addActor(Actor actor) {
+	public Film updateFilm(Film film) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }
