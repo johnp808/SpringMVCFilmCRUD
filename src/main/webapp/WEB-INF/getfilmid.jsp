@@ -26,6 +26,8 @@
 	</c:if>
 	<c:if test="${empty film }">Could not find a film with that ID.
 	</c:if>
+	
+	
 	<br><a href="home.do">Home</a>
 </body>
 </html>
