@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.dao.FilmDAO;
 import com.skilldistillery.film.entities.Film;
@@ -28,6 +29,21 @@ public class FilmController {
 			mv.addObject(film);
 		}
 		mv.setViewName("getfilmid");
+		return mv;
+	}
+	
+	@RequestMapping(path = "AddFilm.do" , method = RequestMethod.POST)
+	public ModelAndView createFilm(Film film, RedirectAttributes redir) {
+		ModelAndView mv = new ModelAndView();
+		Film checkFilm = filmDAO.createFilm(film);
+		redir.addFlashAttribute("film", checkFilm);
+		mv.setViewName("redirect:filmCreated.do");
+		return mv;
+	}
+	@RequestMapping(path = "filmCreated.do", method = RequestMethod.GET)
+	public ModelAndView created() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("filmAdded");
 		return mv;
 	}
 }

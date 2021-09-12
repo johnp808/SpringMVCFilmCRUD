@@ -11,6 +11,7 @@
 <body>
 <h1>MVC Film Site</h1>
 <a href="GetFilmId.html">Get Film By Id</a><br/>
+<a href="AddFilm.html">Add Film</a><br/>
 
 
 
