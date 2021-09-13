@@ -40,12 +40,14 @@
 		<br>
 		<a href="deleteFilm.do?filmId=${film.id}">Delete this film</a>
 		<br>
-		<a href="filmToUpdate.do?filmId=${film.id}">Update this film
+		<a href="filmGettingUpdate.do?filmId=${film.id}">Update this film
 			information</a>
 	</c:if>
 	<c:if test="${empty film }">Sorry, but that film ID doesn't exist.  Please Try Again!
 	<br>
 		<a href="home.do">Home</a>
 	</c:if>
+	
+	
 </body>
 </html>
