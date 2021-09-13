@@ -7,15 +7,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Film Updated</title>
+<title>MVC Film Site</title>
 </head>
 <body>
+<h1>Film Update</h1>
 <c:if test="${film.id > 1}">${film.title } updated successfully.
-<br><a href="home.do">Home</a>
 </c:if>
 <c:if test="${film.id < 1}">I'm sorry, the film didn't update correctly.  Please try again
-<br><a href="home.do">Home</a>
 </c:if>
+<br><a href="home.do">Home</a>
 </body>
 </html>
-	
