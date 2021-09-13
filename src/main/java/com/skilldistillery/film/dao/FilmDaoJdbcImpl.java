@@ -24,6 +24,7 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 			e.printStackTrace();
 		}
 	}
+	
 
 	@Override
 	public Film findById(int filmId) {
@@ -36,9 +37,9 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 			ps.setInt(1, filmId);
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
-					film = new Film(rs.getInt("id"), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),
-							rs.getInt(6), rs.getDouble(7), rs.getInt(8), rs.getDouble(9), rs.getString(10),
-							rs.getString(11));
+					film = new Film(rs.getInt("id"), rs.getString("title"), rs.getString("description"), rs.getInt("release_year"), rs.getInt("language_id"),
+							rs.getInt("rental_duration"), rs.getDouble("rental_rate"), rs.getInt("length"), rs.getDouble("replacement_cost"), rs.getString("rating"),
+							rs.getString("special_features"));
 				}
 			} catch (SQLException e) {
 				System.err.println("Database error: " + e);
