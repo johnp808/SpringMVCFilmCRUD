@@ -10,7 +10,7 @@ Full stack project that implements CRUD database operations for a mock film data
 * Java
 * Spring MVC
 * MySQL
-* MAMO
+* MAMP
 
 ### Lessons Learned
 Communication is key. Our group was having issues pulling and pushing and had several merge conflicts. We were able to
