@@ -10,7 +10,8 @@
 </head>
 <body>
 		<c:if test="${! empty film}">
-			<div class="alert alert-success" role="alert">${film.title} was added to the database!</div>
+			<div class="alert alert-success" role="alert">Film added</div>
+			${film.title}
 		</c:if>
 		<c:if test="${empty film}">
 			<div class="alert alert-danger" role="alert">Error adding Film</div>

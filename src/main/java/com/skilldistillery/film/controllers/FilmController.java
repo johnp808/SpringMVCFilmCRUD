@@ -46,8 +46,8 @@ public class FilmController {
 		return mv;
 	}
 	
-	@RequestMapping(path = "AddFilm.do" , method = RequestMethod.POST)
-	public ModelAndView createFilm(Film film, RedirectAttributes redir) {
+	@RequestMapping(path = "AddNewFilm.do" , method = RequestMethod.POST)
+	public ModelAndView AddNewFilm(Film film, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
 		Film checkFilm = filmDAO.createFilm(film);
 		redir.addFlashAttribute("film", checkFilm);
@@ -59,7 +59,7 @@ public class FilmController {
 	@RequestMapping(path = "filmCreated.do", method = RequestMethod.GET)
 	public ModelAndView created() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("filmadded");
+		mv.setViewName("filmCreated");
 		return mv;
 	}
 	
