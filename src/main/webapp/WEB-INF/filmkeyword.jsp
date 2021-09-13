@@ -2,35 +2,34 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Film</title>
+<title>Results</title>
 </head>
 <body>
-<h1>Your Search Results</h1>
-	<c:if test="${not empty film}">
-		<br>
-		Title: ${film.title} 
-		<br>
-		Release Year: ${film.releaseYear}
-		<br>
-		Rated: ${film.rating}
-		<br>
-		Film Description: ${film.description}
-		<br>
-		${film.length } minutes long
-		<br>
+	<h1>Films with matching keywords</h1>
+	<c:if test="${not empty films }">
+	<br>That keyword has found ${films.size() } records.<br>
+	<h4>Please select a film for more information.</h4>
+	<div>
+		<form action="idLookup.do" method="POST">
+			<c:forEach var="f" items="${films }">
+				<div>
+					<input type="radio" id="${f.id }" name="filmId" value="${f.id }"> ${film.title }
+					<label>${f.title }</label>, ${f.releaseYear }, ${f.rating }<br>
+				</div>
+			</c:forEach>
+			<input type="submit" value="More Info">
+		</form>
+	</div>
 	</c:if>
-	<c:if test="${empty film }">Could not find a film with that ID.
+	<c:if test="${empty films }">
+	No films match that keyword.  Please try again.
 	</c:if>
-	
-	<br><a href="deleteFilm.do?filmId=${film.id}">Delete this film</a>
-	<br>
-	<a href="filmGettingUpdate.do?filmId=${film.id}">Update this film
-			information</a>
 	<br><a href="home.do">Home</a>
 </body>
 </html>

@@ -9,7 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
+import com.skilldistillery.film.entities.Category;
 
 public class FilmDaoJdbcImpl implements FilmDAO {
 	String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
@@ -234,6 +237,47 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 		}
 		return filmList;
 
+	}
+
+	@Override
+	public List<Actor> findActorsByFilmId(int filmId) {
+		List<Actor> actors = new ArrayList<>();
+		String sql = "SELECT a.id, a.first_name, a.last_name FROM actor a JOIN film_actor f on a.id = f.actor_id where f.film_id = ?";
+		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+				PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setInt(1, filmId);
+			try (ResultSet rs = ps.executeQuery();) {
+				while (rs.next()) {
+					actors.add(new Actor(rs.getInt(1), rs.getString(2), rs.getString(3)));
+				}
+			} catch (SQLException e) {
+				System.err.println("Database Error " + e);
+			}
+		} catch (SQLException e) {
+			System.err.println("Database Error: " + e);
+		}
+		return actors;
+	}
+
+	@Override
+	public List<Category> findCategoriesByFilmId(int filmId) {
+		List<Category> categories = new ArrayList<>();
+		String sql = "SELECT id, name FROM category c JOIN film_category f ON c.id = f.category_id WHERE f.film_id = ?";
+		try (Connection conn = DriverManager.getConnection(URL, user, pass);
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, filmId);
+			try (ResultSet rs = ps.executeQuery();) {
+				while (rs.next()) {
+					categories.add(new Category(rs.getInt(1), rs.getString(2)));
+				}
+			} catch (SQLException e) {
+				System.err.println("Database Error: " + e);
+			}
+		} catch (SQLException e) {
+			System.err.println("Database Error: " + e);
+
+		}
+		return categories;
 	}
 
 }

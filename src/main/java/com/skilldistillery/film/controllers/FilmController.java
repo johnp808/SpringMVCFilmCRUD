@@ -11,7 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.dao.FilmDAO;
+import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
+import com.skilldistillery.film.entities.Category;
 
 
 @Controller
@@ -35,14 +37,23 @@ public class FilmController {
 		return mv;
 	}
 	
-	@RequestMapping(path = "GetFilmsByKeyword.do", method = RequestMethod.POST)
-	public ModelAndView findFilmK(String keyword) {
-		List<Film> filmList = filmDAO.findFilmByKeyword(keyword);
+//	@RequestMapping(path = "GetFilmsByKeyword.do", method = RequestMethod.POST)
+//	public ModelAndView findFilmK(String keyword) {
+//		List<Film> filmList = filmDAO.findFilmByKeyword(keyword);
+//		ModelAndView mv = new ModelAndView();
+//		if (filmList != null) {
+//			mv.addObject(filmList);
+//		}
+//		mv.setViewName("filmkeyword");
+//		return mv;
+//	}
+	
+	@RequestMapping(path = "keywordLookup.do")
+	public ModelAndView keywordLookup(String keyword) {
+		List<Film> films = filmDAO.findFilmByKeyword(keyword);
 		ModelAndView mv = new ModelAndView();
-		if (filmList != null) {
-			mv.addObject(filmList);
-		}
 		mv.setViewName("filmkeyword");
+		mv.addObject("films", films);
 		return mv;
 	}
 	
@@ -101,6 +112,19 @@ public class FilmController {
 		mv.addObject("film", newFilm);
 		return mv;
 	}
-
+	@RequestMapping(path = "idLookup.do", method = RequestMethod.POST)
+	public ModelAndView idLookup(int filmId) {
+		Film film = filmDAO.findById(filmId);
+		List<Actor> actors = filmDAO.findActorsByFilmId(filmId);
+		List<Category> categories = filmDAO.findCategoriesByFilmId(filmId);
+		ModelAndView mv = new ModelAndView();
+		if (film != null) {
+			mv.addObject(film);
+			mv.addObject("actors", actors);
+			mv.addObject("categories", categories);
+		}
+		mv.setViewName("viewfilm");
+		return mv;
+	}
 	
 }
