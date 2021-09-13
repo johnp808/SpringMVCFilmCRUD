@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -59,4 +60,31 @@ public class FilmController {
 		mv.setViewName("filmDeleted");
 		return mv;
 	}
+
+	@RequestMapping(path = "filmToUpdate.do")
+	public ModelAndView filmToUpdate(int filmId) {
+		Film film = filmDAO.findById(filmId);
+		ModelAndView mv = new ModelAndView();
+		if (film != null)
+			mv.addObject(film);
+		mv.setViewName("updatefilm");
+		return mv;
+	}
+	@RequestMapping(path = "updateFilm.do", method = RequestMethod.POST)
+	public ModelAndView updateFilm(@RequestParam("filmId") int filmID, Film film) {
+		ModelAndView mv = new ModelAndView();
+		System.out.println(film);
+		film.setId(filmID);
+		System.out.println(film.getId());
+		Film newFilm = filmDAO.updateFilm(film);
+		mv.setViewName("filmupdated");
+		if (newFilm == null) {
+			newFilm = new Film();
+			newFilm.setId(-1);
+		}
+		mv.addObject("film", newFilm);
+		return mv;
+	}
+
+	
 }

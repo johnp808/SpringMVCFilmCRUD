@@ -136,8 +136,57 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 
 	@Override
 	public Film updateFilm(Film film) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+
+		String sql = "UPDATE film SET title = ?,description = ?,release_year = ?,language_id = ?,"
+				+ "rental_duration = ?,rental_rate = ?,length = ?,replacement_cost = ?,rating = ?,"
+				+ "special_features = ? WHERE id = ?";
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+
+			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, film.getTitle());
+			st.setString(2, film.getDescription());
+			st.setInt(3, film.getReleaseYear());
+			st.setInt(4, film.getLanguageId());
+			st.setInt(5, film.getRentalDuration());
+			st.setDouble(6, film.getRentalRate());
+			st.setInt(7, film.getLength());
+			st.setDouble(8, film.getReplacementCost());
+			st.setString(9, film.getRating());
+			st.setString(10, film.getSpecialFeatures());
+			st.setInt(11, film.getId());
+			System.out.println(film.getId());
+
+			try {
+				int uf = st.executeUpdate();
+				conn.commit();
+				System.out.println(uf + " film updated");
+
+				ResultSet keys = st.getGeneratedKeys();
+				while (keys.next()) {
+					System.out.println("Updated film ID: " + keys.getInt(1));
+				}
+			} catch (SQLException e) {
+				System.err.println("Error updating.");
+				System.err.println("SQL Error: " + e.getErrorCode() + ": " + e.getMessage());
+				System.err.println("SQL State: " + e.getSQLState());
+				film = null;
+				if (conn != null) {
+					try {
+						conn.rollback();
+					} catch (SQLException e1) {
+						System.err.println("Error rolling back.");
+						e1.printStackTrace();
+					}
+				}
+				return film;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return film;
 	}
 
 }
