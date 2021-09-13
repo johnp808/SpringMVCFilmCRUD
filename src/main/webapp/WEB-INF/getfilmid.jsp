@@ -7,10 +7,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Film</title>
+<title>MVC Film Site</title>
 </head>
 <body>
-<h1>Your Selection</h1>
+<h1>Your Film Selection</h1>
 	<c:if test="${not empty film}">
 		<br>
 		Title: ${film.title} 
@@ -24,13 +24,18 @@
 		${film.length } minutes long
 		<br>
 	</c:if>
+	
 	<c:if test="${empty film }">Could not find a film with that ID.
 	</c:if>
 	
-	<br><a href="deleteFilm.do?filmId=${film.id}">Delete this film</a>
-	<br>
-	<a href="filmGettingUpdate.do?filmId=${film.id}">Update this film
-			information</a>
 	<br><a href="home.do">Home</a>
+	<br>
+	<br>
+	<a href="filmGettingUpdate.do?filmId=${film.id}">Update this film information</a>
+	<br>
+	<br>
+	<br>
+	<h1>Danger Cannot Be Undone...</h1>
+	<br><a href="deleteFilm.do?filmId=${film.id}">Delete this film</a>
 </body>
 </html>

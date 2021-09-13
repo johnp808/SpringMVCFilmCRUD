@@ -10,40 +10,42 @@
 <title>Film Details</title>
 </head>
 <body>
-	<h1>Film Details</h1>
 	<br>
 	<c:if test="${not empty film }">
+	<h1>Film Details</h1>
 		Title: ${film.title }, ${film.releaseYear }, Rated ${film.rating }<br>
 		Description: ${film.description }<br>
 		${film.length } minutes<br>
-		<h4>Categories</h4>
+		<h2>Film Category</h2>
 		<ul>
 			<c:forEach var="c" items="${categories}">
 				<li>${c.name }</li>
 			</c:forEach>
 		</ul>
-		<h4>Cast</h4>
+		<h2>Film Cast</h2>
 		<table>
-			<tr>
-				<th>Actor Name</th>
-				<th>Actor Id</th>
-			</tr>
-			<c:forEach var="a" items="${actors }">
+			<c:forEach var="a" items="${actors}">
 				<tr>
-					<td>${a.firstName } ${a.lastName }</td>
-					<td>${a.id }</td>
+					<td>${a.firstName} ${a.lastName}</td>
+					<td>${a.id}</td>
 				</tr>
 			</c:forEach>
 		</table>
-		<br>
 		<a href="home.do">Home</a>
 		<br>
-		<a href="deleteFilm.do?filmId=${film.id}">Delete this film</a>
+		<br>
 		<br>
 		<a href="filmGettingUpdate.do?filmId=${film.id}">Update this film
 			information</a>
+		<br>		
+		<br>
+		<br>
+			<h1>Danger Cannot Be Undone...</h1>
+		<a href="deleteFilm.do?filmId=${film.id}">Delete this film</a>
 	</c:if>
-	<c:if test="${empty film }">Sorry, but that film ID doesn't exist.  Please Try Again!
+	<c:if test="${empty film}">
+	<h1>Error...</h1>
+	Sorry, but that film ID doesn't exist.  Please Try Again!
 	<br>
 		<a href="home.do">Home</a>
 	</c:if>

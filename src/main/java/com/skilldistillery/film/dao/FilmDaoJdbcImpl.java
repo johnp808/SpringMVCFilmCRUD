@@ -23,7 +23,6 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -225,7 +224,6 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 				film.setReplacementCost(filmResult.getDouble("replacement_cost"));
 				film.setRating(filmResult.getString("rating"));
 				film.setSpecialFeatures(filmResult.getString("special_features"));
-//				film.setFilmCast(findActorsByFilmId(filmResult.getInt("id")));
 				filmList.add(film);
 			}
 			filmResult.close();

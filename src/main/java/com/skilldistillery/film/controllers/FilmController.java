@@ -37,22 +37,11 @@ public class FilmController {
 		return mv;
 	}
 	
-//	@RequestMapping(path = "GetFilmsByKeyword.do", method = RequestMethod.POST)
-//	public ModelAndView findFilmK(String keyword) {
-//		List<Film> filmList = filmDAO.findFilmByKeyword(keyword);
-//		ModelAndView mv = new ModelAndView();
-//		if (filmList != null) {
-//			mv.addObject(filmList);
-//		}
-//		mv.setViewName("filmkeyword");
-//		return mv;
-//	}
-	
-	@RequestMapping(path = "keywordLookup.do")
-	public ModelAndView keywordLookup(String keyword) {
+	@RequestMapping(path = "searchKeyword.do")
+	public ModelAndView searchKeyword(String keyword) {
 		List<Film> films = filmDAO.findFilmByKeyword(keyword);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("filmkeyword");
+		mv.setViewName("searchkeyword");
 		mv.addObject("films", films);
 		return mv;
 	}
@@ -112,8 +101,8 @@ public class FilmController {
 		mv.addObject("film", newFilm);
 		return mv;
 	}
-	@RequestMapping(path = "idLookup.do", method = RequestMethod.POST)
-	public ModelAndView idLookup(int filmId) {
+	@RequestMapping(path = "findId.do", method = RequestMethod.POST)
+	public ModelAndView findId(int filmId) {
 		Film film = filmDAO.findById(filmId);
 		List<Actor> actors = filmDAO.findActorsByFilmId(filmId);
 		List<Category> categories = filmDAO.findCategoriesByFilmId(filmId);
@@ -123,7 +112,7 @@ public class FilmController {
 			mv.addObject("actors", actors);
 			mv.addObject("categories", categories);
 		}
-		mv.setViewName("viewfilm");
+		mv.setViewName("filmdetails");
 		return mv;
 	}
 	

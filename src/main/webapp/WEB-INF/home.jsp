@@ -10,12 +10,12 @@
 </head>
 <body>
 <h1>MVC Film Site</h1>
-<a href="GetFilmId.html">Get Film By Id</a><br/>
-<a href="AddFilm.html">Add Film</a><br/>
-<a href="filmkeyword.html">Search Film By Keyword</a><br>
-
-
-
-
+<a href="GetFilmId.html">Search for a film By its Id number.</a><br/>
+<br>
+<br>
+<a href="AddFilm.html">Add a Film to the database.</a><br/>
+<br>
+<br>
+<a href="searchkeyword.html">Search for a film by keyword.</a><br>
 </body>
 </html>
