@@ -103,16 +103,20 @@ public class FilmDaoJdbcImpl implements FilmDAO {
 
 	@Override
 	public Film deleteFilm(Film film) {
-		Film filmToDelete = film;
-		String sql = "DELETE FROM film WHERE id = ?";
 		Connection conn = null;
+		Film filmToDelete = film;
+		String sql = "DELETE FROM film WHERE film.id = ?";
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
-			PreparedStatement stmt = conn.prepareStatement(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, film.getId());
 			int uc = stmt.executeUpdate();
 			System.out.println(uc + " film records deleted");
+			ResultSet keys = stmt.getGeneratedKeys();
+			while (keys.next()) {
+				System.out.println("Delete film ID: " + keys.getInt(1));
+			}
 			conn.commit();
 		} catch (SQLException e) {
 			System.err.println("Error during delete");

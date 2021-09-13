@@ -10,11 +10,11 @@
 </head>
 <body>
 	<c:choose>
-		<c:when test="${deletedFilm != null}">
+		<c:when test="${film != null}">
 			<div class="alert alert-success" role="alert">Film deleted</div>
-			${deletedFilm}
+			${film.title}
 		</c:when>
-		<c:when test="${deletedFilm == null}">
+		<c:when test="${film == null}">
 			<div class="alert alert-danger" role="alert">Film could not be deleted</div>
 		</c:when>
 		<c:otherwise>

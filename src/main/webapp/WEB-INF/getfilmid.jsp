@@ -27,7 +27,7 @@
 	<c:if test="${empty film }">Could not find a film with that ID.
 	</c:if>
 	
-	<br><a href=DeleteFilm.html>Delete Film</a>
+	<br><a href="deleteFilm.do?filmId=${film.id}">Delete this film</a>
 	<br><a href="home.do">Home</a>
 </body>
 </html>
