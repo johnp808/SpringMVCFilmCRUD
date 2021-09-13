@@ -41,6 +41,7 @@ public class FilmController {
 		mv.setViewName("redirect:filmCreated.do");
 		return mv;
 	}
+	
 	@RequestMapping(path = "filmCreated.do", method = RequestMethod.GET)
 	public ModelAndView created() {
 		ModelAndView mv = new ModelAndView();
@@ -67,9 +68,10 @@ public class FilmController {
 		ModelAndView mv = new ModelAndView();
 		if (film != null)
 			mv.addObject(film);
-		mv.setViewName("updatefilm");
+		mv.setViewName("updatedfilm");
 		return mv;
 	}
+	
 	@RequestMapping(path = "updateFilm.do", method = RequestMethod.POST)
 	public ModelAndView updateFilm(@RequestParam("filmId") int filmID, Film film) {
 		ModelAndView mv = new ModelAndView();
@@ -77,7 +79,7 @@ public class FilmController {
 		film.setId(filmID);
 		System.out.println(film.getId());
 		Film newFilm = filmDAO.updateFilm(film);
-		mv.setViewName("filmupdated");
+		mv.setViewName("filmUpdated");
 		if (newFilm == null) {
 			newFilm = new Film();
 			newFilm.setId(-1);
